@@ -12,6 +12,7 @@ specifiers:
   lodash: ^4.17.21
   pinia: ^2.0.30
   pinia-plugin-persistedstate: ^3.0.2
+  tauri-plugin-sqlite-api: github:lzdyes/tauri-plugin-sqlite#v0.1.1
   typescript: ^4.6.4
   vite: ^4.0.0
   vue: ^3.2.45
@@ -25,6 +26,7 @@ dependencies:
   lodash: 4.17.21
   pinia: 2.0.30_hmuptsblhheur2tugfgucj7gc4
   pinia-plugin-persistedstate: 3.0.2_pinia@2.0.30
+  tauri-plugin-sqlite-api: github.com/lzdyes/tauri-plugin-sqlite/3d09a5a963f96a06debe27b3e37d9337aca18dcc
   vue: 3.2.47
 
 devDependencies:
@@ -284,6 +286,13 @@ packages:
 
   /@sxzz/popperjs-es/2.11.7:
     resolution: {integrity: sha512-Ccy0NlLkzr0Ex2FKvh2X+OyERHXJ88XJ1MXtsI9y9fGexlaXaVTPzBCRBwIxFkORuOb+uBqeu+RqnpgYTEZRUQ==}
+    dev: false
+
+  /@tauri-apps/api/1.0.0-rc.4:
+    resolution: {integrity: sha512-1HaUsx8+TzFHDoQ+Mmd6RWaMsPyZlurQHgACDt+il5e/ui6pDkumVXaS92SnY5XOcS4gBC0BkgjVfkWgcm/Oww==}
+    engines: {node: '>= 12.13.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
+    dependencies:
+      type-fest: 2.12.2
     dev: false
 
   /@tauri-apps/api/1.2.0:
@@ -806,6 +815,15 @@ packages:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
 
+  /tslib/2.5.0:
+    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
+    dev: false
+
+  /type-fest/2.12.2:
+    resolution: {integrity: sha512-qt6ylCGpLjZ7AaODxbpyBZSs9fCI9SkL3Z9q2oxMBQhs/uyY+VD8jHA8ULCGmWQJlBgqvO3EJeAngOHD8zQCrQ==}
+    engines: {node: '>=12.20'}
+    dev: false
+
   /typescript/4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
@@ -886,3 +904,12 @@ packages:
       '@vue/runtime-dom': 3.2.47
       '@vue/server-renderer': 3.2.47_vue@3.2.47
       '@vue/shared': 3.2.47
+
+  github.com/lzdyes/tauri-plugin-sqlite/3d09a5a963f96a06debe27b3e37d9337aca18dcc:
+    resolution: {tarball: https://codeload.github.com/lzdyes/tauri-plugin-sqlite/tar.gz/3d09a5a963f96a06debe27b3e37d9337aca18dcc}
+    name: tauri-plugin-sqlite-api
+    version: 0.1.1
+    dependencies:
+      '@tauri-apps/api': 1.0.0-rc.4
+      tslib: 2.5.0
+    dev: false

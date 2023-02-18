@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "pinia": "^2.0.30",
     "pinia-plugin-persistedstate": "^3.0.2",
+    "tauri-plugin-sqlite-api": "github:lzdyes/tauri-plugin-sqlite#v0.1.1",
     "vue": "^3.2.45"
   },
   "devDependencies": {
