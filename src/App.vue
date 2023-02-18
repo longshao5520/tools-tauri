@@ -7,6 +7,10 @@ import { get } from "lodash";
 
 import { useFileListStore } from "./store/useFileListStore";
 
+import { useDark, useToggle } from '@vueuse/core'
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
 const store = useFileListStore();
 
 let form = reactive({
@@ -26,7 +30,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
 </script>
 
 <template>
-  <div class="container">
+  <el-main>
     <el-form :model="form" label-width="100px">
       <el-form-item label="API地址">
         <el-input v-model="form.api" placeholder="API地址" />
@@ -68,11 +72,16 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
       </el-table-column>
       <el-table-column prop="url" label="预览">
         <template #default="{ row }">
-          <el-image :src="row.url" :preview-src-list="[row.url]" fit="scale-down" style="width: 100px;"></el-image>
+          <el-image
+            :src="row.url"
+            :preview-src-list="[row.url]"
+            fit="scale-down"
+            style="width: 100px"
+          ></el-image>
         </template>
       </el-table-column>
     </el-table>
-  </div>
+  </el-main>
 </template>
 
 <style scoped>

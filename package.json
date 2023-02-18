@@ -12,6 +12,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "@tauri-apps/api": "^1.2.0",
+    "@vueuse/core": "^9.13.0",
     "element-plus": "^2.2.31",
     "lodash": "^4.17.21",
     "pinia": "^2.0.30",
