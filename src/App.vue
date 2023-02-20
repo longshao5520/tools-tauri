@@ -1,15 +1,13 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { UploadFilled } from "@element-plus/icons-vue";
 import { reactive } from "vue";
 import { get } from "lodash";
 
 import { useFileListStore } from "./store/useFileListStore";
 
-import { useDark, useToggle } from '@vueuse/core'
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+import { useDark, useToggle } from "@vueuse/core";
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 const store = useFileListStore();
 
@@ -31,7 +29,8 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
 
 <template>
   <el-main>
-    <el-form :model="form" label-width="100px">
+    <router-view></router-view>
+    <!-- <el-form :model="form" label-width="100px">
       <el-form-item label="API地址">
         <el-input v-model="form.api" placeholder="API地址" />
       </el-form-item>
@@ -53,22 +52,12 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
     >
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <!-- <template #tip>
-        <div class="el-upload__tip">
-          jpg/png files with a size less than 500kb
-        </div>
-      </template> -->
-    </el-upload>
+    </el-upload> -->
 
-    <el-table :data="store.files" style="width: 100%">
+    <!-- <el-table :data="store.files" style="width: 100%">
       <el-table-column prop="name" label="文件名" />
       <el-table-column prop="type" label="文件类型" />
       <el-table-column prop="url" label="文件地址">
-        <!-- <template #default="{ row }">
-          <el-link :href="row.url" type="primary" target="_blank"
-            >点击查看</el-link
-          >
-        </template> -->
       </el-table-column>
       <el-table-column prop="url" label="预览">
         <template #default="{ row }">
@@ -80,7 +69,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
           ></el-image>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
   </el-main>
 </template>
 

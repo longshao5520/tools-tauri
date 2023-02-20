@@ -18,7 +18,8 @@
     "pinia": "^2.0.30",
     "pinia-plugin-persistedstate": "^3.0.2",
     "tauri-plugin-sqlite-api": "github:lzdyes/tauri-plugin-sqlite#v0.1.1",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",
