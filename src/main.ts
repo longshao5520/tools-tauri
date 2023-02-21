@@ -2,9 +2,9 @@ import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
 
-import ElementPlus from "element-plus";
-import "element-plus/dist/index.css";
-import "element-plus/theme-chalk/dark/css-vars.css";
+import Antd from "ant-design-vue";
+// import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.dark.css'
 
 import { createPinia } from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
@@ -24,4 +24,8 @@ store.use(
 
 import router from "./router";
 
-createApp(App).use(router).use(store).use(ElementPlus).mount("#app");
+createApp(App)
+  .use(router)
+  .use(store)
+  .use(Antd)
+  .mount("#app");
