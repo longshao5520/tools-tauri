@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { UploadFilled } from "@element-plus/icons-vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { get } from "lodash";
 
 import { useFileListStore } from "./store/useFileListStore";
 
 import { useDark, useToggle } from "@vueuse/core";
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
+const isDark = ref(false);
+useDark({
+  onChanged: (IsDark) => {
+    isDark.value = IsDark;
+  },
+});
+
+// console.log(isDark);
+
+// const toggleDark = useToggle(isDark);
 
 const store = useFileListStore();
 
@@ -28,9 +36,11 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
 </script>
 
 <template>
-  <el-main>
+  <!-- <a-config-provider :prefix-cls="isDark ? 'custom-dark' : 'ant'"> -->
     <router-view></router-view>
-    <!-- <el-form :model="form" label-width="100px">
+  <!-- </a-config-provider> -->
+  <!-- <el-main> -->
+  <!-- <el-form :model="form" label-width="100px">
       <el-form-item label="API地址">
         <el-input v-model="form.api" placeholder="API地址" />
       </el-form-item>
@@ -54,7 +64,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </el-upload> -->
 
-    <!-- <el-table :data="store.files" style="width: 100%">
+  <!-- <el-table :data="store.files" style="width: 100%">
       <el-table-column prop="name" label="文件名" />
       <el-table-column prop="type" label="文件类型" />
       <el-table-column prop="url" label="文件地址">
@@ -70,7 +80,7 @@ const handleSuccess = (response: any, file: any, fileList: any) => {
         </template>
       </el-table-column>
     </el-table> -->
-  </el-main>
+  <!-- </el-main> -->
 </template>
 
 <style scoped>
