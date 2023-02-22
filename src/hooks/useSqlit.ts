@@ -23,10 +23,19 @@ export const useSqlit = () => {
     await closeDB();
   };
 
+  const selectCount = async (tableName: string) => {
+    await openDB();
+    const data = await db.select(`Select count(*) as total From ${tableName}`);
+    console.log("查询数据成功", data);
+    await closeDB();
+    return data[0].total;
+  };
+
   const select = async (
     tableName: string,
     pageCount?: number,
-    page?: number
+    page?: number,
+    where?: string
   ) => {
     await openDB();
     // String sql = "Select * From " + HistoryHelper.TABLE_NAME + " order by " + HistoryHelper.ID + " desc " + " Limit '" + pageCount + "' Offset '" + ((page - 1) * pageCount) + "'";
@@ -34,7 +43,7 @@ export const useSqlit = () => {
     const data = await db.select(
       `Select * From ${tableName} Limit ${pageCount} Offset ${
         ((page || 1) - 1) * (pageCount || 10)
-      }`
+      } ${where ? "WHERE " + where : ""}`
     );
     const count = await db.select(`Select count(*) as total From ${tableName}`);
     console.log("查询数据成功", data);
@@ -76,5 +85,5 @@ export const useSqlit = () => {
     await closeDB();
   };
 
-  return { createTable, select, add, update, del };
+  return { createTable, select, selectCount, add, update, del };
 };
