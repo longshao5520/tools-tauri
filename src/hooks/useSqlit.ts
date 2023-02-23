@@ -38,19 +38,16 @@ export const useSqlit = () => {
     where?: string
   ) => {
     await openDB();
-    // String sql = "Select * From " + HistoryHelper.TABLE_NAME + " order by " + HistoryHelper.ID + " desc " + " Limit '" + pageCount + "' Offset '" + ((page - 1) * pageCount) + "'";
-
     const data = await db.select(
-      `Select * From ${tableName} Limit ${pageCount} Offset ${
-        ((page || 1) - 1) * (pageCount || 10)
-      } ${where ? "WHERE " + where : ""}`
+      `Select * From ${tableName} ${
+        where ? "WHERE " + where : ""
+      } Limit ${pageCount} Offset ${((page || 1) - 1) * (pageCount || 10)}`
     );
-    const count = await db.select(`Select count(*) as total From ${tableName}`);
     console.log("查询数据成功", data);
     await closeDB();
     return {
       data,
-      total: count[0].count,
+      total: await selectCount(tableName),
     };
   };
 
@@ -63,14 +60,10 @@ export const useSqlit = () => {
     await closeDB();
   };
 
-  const update = async (tableName: string, columns: string, where?: string) => {
+  const update = async (tableName: string, columns: string, where: string) => {
     await openDB();
-    let sql = "";
-    if (where) {
-      sql = `UPDATE ${tableName} SET ${columns} WHERE ${where};`;
-    } else {
-      sql = `UPDATE ${tableName} SET ${columns};`;
-    }
+    const sql = `UPDATE ${tableName} SET ${columns} WHERE ${where};`;
+    console.log(sql);
     await db.execute(sql);
     console.log("更新数据成功");
     await closeDB();
