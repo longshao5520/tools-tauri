@@ -18,16 +18,6 @@ const handleChange = (name: any) => {
 </script>
 
 <template>
-  <!-- <el-page-header title="首页" :icon="HomeFilled" @back="back">
-    <template #content>
-      <el-tabs v-model="activeName" type="card" @tab-change="handleChange">
-        <el-tab-pane label="上传区" name="/file/upload"></el-tab-pane>
-        <el-tab-pane label="文件列表" name="/file/list"></el-tab-pane>
-        <el-tab-pane label="图床配置" name="/file/setting"></el-tab-pane>
-      </el-tabs>
-    </template>
-    <router-view></router-view>
-  </el-page-header> -->
   <a-page-header>
     <template #title>
       <div style="display: flex">
