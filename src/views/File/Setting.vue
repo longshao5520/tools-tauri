@@ -9,6 +9,10 @@ const r = defineR({
   hideRowSelection: false,
   columns: [
     {
+      title: "id",
+      dataIndex: "id",
+    },
+    {
       title: "名称",
       dataIndex: "name",
     },
@@ -23,6 +27,10 @@ const r = defineR({
     {
       title: "jsonUrl",
       dataIndex: "jsonUrl",
+    },
+    {
+      title: "状态",
+      dataIndex: "active",
     },
     {
       title: "操作",
@@ -62,21 +70,18 @@ const c = defineC({
 
 const u = defineU({
   items: () => [
+    { is: "a-input", name: "id", label: "id", display: false },
     { is: "a-input", name: "name", label: "名称" },
     { is: "a-input", name: "api", label: "api" },
     { is: "a-input", name: "postName", label: "postName" },
     { is: "a-input", name: "jsonUrl", label: "jsonUrl" },
+    { is: "a-input", name: "active", label: "状态", disabled: true },
   ],
   async done(formData) {
+    console.log(formData);
+    const { id, name, api, postName, jsonUrl, active } = formData;
     try {
-      await update(
-        formData.id,
-        formData.name,
-        formData.api,
-        formData.postName,
-        formData.jsonUrl,
-        formData.active
-      );
+      await update(id, name, api, postName, jsonUrl, active);
     } catch (error) {
       console.log(error);
     }
@@ -98,7 +103,6 @@ const d = defineD({
     return [true, "成功"];
   },
 });
-
 </script>
 
 <template>
