@@ -29,4 +29,15 @@ useDark({
   <router-view></router-view>
 </template>
 
-<style></style>
+<style>
+body {
+  overflow: hidden;
+  height: 100vh !important;
+}
+
+#app {
+  height: 100vh !important;
+  overflow: hidden;
+  overflow-y: auto;
+}
+</style>
