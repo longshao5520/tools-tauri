@@ -16,6 +16,9 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "clipboard": {
+        "writeText": true
       }
     },
     "bundle": {
@@ -63,7 +66,7 @@
         "height": 600,
         "resizable": true,
         "title": "tools-tauri",
-        "width": 800
+        "width": 1000
       }
     ]
   }
