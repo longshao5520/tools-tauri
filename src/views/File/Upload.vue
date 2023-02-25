@@ -3,6 +3,8 @@ import { InboxOutlined } from "@ant-design/icons-vue";
 import { get } from "lodash";
 import { onMounted, reactive, ref } from "vue";
 import { useFileUpload, useFileUploadSettings } from "../../api/file";
+import { writeText } from "@tauri-apps/api/clipboard";
+import { message } from "ant-design-vue";
 
 const { select, selectActive, updateActive } = useFileUploadSettings();
 const { add } = useFileUpload();
@@ -49,11 +51,20 @@ const linkFormat = ref("Url");
 
 const uploadChange = async ({ file }: { file: any }) => {
   if (file.status === "done") {
-    const url = get(file.response, activeSetting.jsonUrl);
     const name = file.name;
     const type = file.type;
     const size = file.size;
-    await add(name, url, size, type, 0);
+    message.config({
+      top: "100px",
+    });
+    try {
+      const url = get(file.response, activeSetting.jsonUrl);
+      await add(name, url, size, type, 0);
+      await writeText(url);
+      message.success(`${url}已复制到前切板`);
+    } catch (error) {
+      message.error(error as string);
+    }
   }
 };
 </script>
