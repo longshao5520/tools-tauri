@@ -69,9 +69,46 @@ export const useFileUploadSettings = () => {
 
   const updateActive = async (id: number, active: number) => {
     await db.update("upload_file_setting", `active=${active}`, `id=${id}`);
-  }
+  };
 
   return { select, selectActive, add, update, updateActive, del };
+};
+
+export const useFileUploadHistory = () => {
+  const db = useSqlit();
+
+  const createTable = async () => {
+    await db.createTable(
+      "upload_file_history",
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT, type TEXT, settingId INTEGER"
+    );
+  };
+
+  const select = async (pageCount: number, page: number) => {
+    await createTable();
+    const res = await db.select("upload_file_history", pageCount, page);
+    return res;
+  };
+
+  const add = async (
+    name: string,
+    url: string,
+    type: string,
+    settingId: number
+  ) => {
+    await createTable();
+    await db.add(
+      "upload_file_history",
+      "name, url, type, settingId",
+      `'${name}', '${url}', '${type}', ${settingId}`
+    );
+  };
+
+  const del = async (id: number) => {
+    await db.del("upload_file_history", `id=${id}`);
+  };
+
+  return { select, add, del };
 };
 
 export const useFileUpload = () => {
@@ -103,6 +140,7 @@ export const useFileUpload = () => {
       "name, path, size, type, settingId",
       `'${name}', '${path}', '${size}', '${type}', ${settingId}`
     );
+    await useFileUploadHistory().add(name, path, type, settingId);
   };
 
   const del = async (id: number) => {
