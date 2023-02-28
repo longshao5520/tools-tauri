@@ -1,9 +1,10 @@
-import SQLiteApi from "tauri-plugin-sqlite-api";
+import Database from "../tauri-plugin-sql";
+
 export const useSqlit = () => {
   let db: any = null;
 
   const openDB = async () => {
-    db = await await SQLiteApi.open("./tools.db");
+    db = await Database.load("sqlite:tools.db");
     console.log("数据库打开成功");
   };
 
