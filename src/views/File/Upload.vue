@@ -71,7 +71,7 @@ const uploadChange = async ({ file }: { file: any }) => {
 
 <template>
   <a-upload-dragger
-    name="file"
+    :name="activeSetting.postName"
     :action="activeSetting.api"
     :showUploadList="false"
     :maxCount="1"
