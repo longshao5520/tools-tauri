@@ -62,7 +62,7 @@
         "height": 600,
         "resizable": true,
         "title": "tools-tauri",
-        "width": 1000
+        "width": 800
       }
     ]
   }
