@@ -32,6 +32,16 @@ export const useSqlit = () => {
     return data[0].total;
   };
 
+  const selectAll = async (tableName: string, where?: string) => {
+    await openDB();
+    const data = await db.select(
+      `Select * From ${tableName}  ${where ? "WHERE " + where : ""}`
+    );
+    console.log("查询数据成功", data);
+    await closeDB();
+    return data;
+  };
+
   const select = async (
     tableName: string,
     pageCount?: number,
@@ -79,5 +89,5 @@ export const useSqlit = () => {
     await closeDB();
   };
 
-  return { createTable, select, selectCount, add, update, del };
+  return { createTable, select, selectCount, selectAll, add, update, del };
 };
