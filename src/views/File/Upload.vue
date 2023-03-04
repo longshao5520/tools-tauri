@@ -3,6 +3,7 @@ import { InboxOutlined } from "@ant-design/icons-vue";
 import { get } from "lodash";
 import { onMounted, reactive, ref } from "vue";
 import { useFileUpload, useFileUploadSettings } from "../../api/file";
+import { useSystemSetting } from "../../api/setting";
 import { writeText } from "@tauri-apps/api/clipboard";
 import { message } from "ant-design-vue";
 
@@ -43,11 +44,44 @@ const selectChange = async (value: any) => {
   await switchActive();
 };
 
-onMounted(async () => {
-  await fetch();
-});
+const {
+  select: selectLinkFormat,
+  add: addLinkFormat,
+  update: updateLinkFormat,
+} = useSystemSetting();
+const linkFormat = ref("");
+const fetchLinkFormat = async () => {
+  const format = await selectLinkFormat("file", "upload_link_format");
+  if (format.length === 0) {
+    await addLinkFormat(
+      "链接格式",
+      "upload_link_format",
+      "Url",
+      "file",
+      "文件上传链接格式"
+    );
+    linkFormat.value = "Url";
+  } else {
+    linkFormat.value = format[0].value;
+  }
+};
 
-const linkFormat = ref("Url");
+const switchLinkFormat = async () => {
+  await updateLinkFormat("upload_link_format", linkFormat.value);
+};
+
+const getLink = (url: string) => {
+  switch (linkFormat.value) {
+    case "Url":
+      return url;
+    case "Markdown":
+      return `![${url}](${url})`;
+    case "HTML":
+      return `<img src="${url}" />`;
+    default:
+      return url;
+  }
+};
 
 const uploadChange = async ({ file }: { file: any }) => {
   if (file.status === "done") {
@@ -60,13 +94,18 @@ const uploadChange = async ({ file }: { file: any }) => {
     try {
       const url = get(file.response, activeSetting.jsonUrl);
       await add(name, url, size, type, 0);
-      await writeText(url);
+      await writeText(getLink(url));
       message.success(`${url}已复制到前切板`);
     } catch (error) {
       message.error(error as string);
     }
   }
 };
+
+onMounted(() => {
+  fetch();
+  fetchLinkFormat();
+});
 </script>
 
 <template>
@@ -100,10 +139,14 @@ const uploadChange = async ({ file }: { file: any }) => {
       <div style="margin-top: 10px">上传配置</div>
     </a-col>
     <a-col :span="12" class="flex-column-center">
-      <a-radio-group v-model:value="linkFormat" button-style="solid">
+      <a-radio-group
+        v-model:value="linkFormat"
+        button-style="solid"
+        @change="switchLinkFormat"
+      >
+        <a-radio-button value="Url">Url</a-radio-button>
         <a-radio-button value="Markdown">Markdown</a-radio-button>
         <a-radio-button value="HTML">HTML</a-radio-button>
-        <a-radio-button value="Url">Url</a-radio-button>
       </a-radio-group>
       <div style="margin-top: 10px">链接格式</div>
     </a-col>
