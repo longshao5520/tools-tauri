@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useDark } from "@vueuse/core";
+import {reactive, ref} from "vue";
+import {useDark} from "@vueuse/core";
+
 const loadCss = (url: string, isCache = false) => {
   const element = document.createElement("link");
   element.setAttribute("rel", "stylesheet");
@@ -13,13 +14,18 @@ const loadCss = (url: string, isCache = false) => {
   document.head.appendChild(element);
 };
 const isDark = ref(false);
+const theme = reactive({
+  bgColor: "",
+})
 useDark({
   onChanged: (IsDark) => {
     isDark.value = IsDark;
     if (IsDark) {
       loadCss("https://unpkg.com/ant-design-vue/dist/antd.dark.min.css");
+      theme.bgColor = "rgba(0, 0, 0, 0.5)";
     } else {
       loadCss("https://unpkg.com/ant-design-vue/dist/antd.min.css");
+      theme.bgColor = "rgba(255, 255, 255, 0.5)";
     }
   },
 });
@@ -30,13 +36,16 @@ useDark({
 </template>
 
 <style>
+html,
 body {
   overflow: hidden;
-  height: 100vh !important;
+  background-color: transparent !important;
 }
 
 #app {
   height: 100vh !important;
+  /*background-color: v-bind('theme.bgColor') !important;*/
+  background-color: rgba(0, 0, 0, 0.5) !important;
   overflow: hidden;
   overflow-y: auto;
 }

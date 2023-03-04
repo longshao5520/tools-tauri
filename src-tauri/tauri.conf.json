@@ -56,13 +56,15 @@
     "updater": {
       "active": false
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
-        "resizable": true,
+        "resizable": false,
+        "transparent": true,
         "title": "tools-tauri",
-        "width": 800
+        "width": 800,
+        "height": 600
       }
     ]
   }
