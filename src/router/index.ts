@@ -1,36 +1,36 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {createRouter, createWebHashHistory, RouteRecordRaw} from "vue-router";
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
     component: () => import("@/views/Home.vue"),
   },
   {
-    path: "/setting",
-    name: "Setting",
-    component: () => import("@/views/Setting.vue"),
-  },
-  {
     path: "/file",
     component: () => import("../views/File/Index.vue"),
     children: [
       {
-        path: "upload",
+        path: "/file/upload",
         name: "Upload",
         component: () => import("../views/File/Upload.vue"),
       },
       {
-        path: "list",
+        path: "/file/list",
         name: "List",
         component: () => import("../views/File/List.vue"),
       },
       {
-        path: "setting",
+        path: "/file/setting",
         name: "Setting",
         component: () => import("../views/File/Setting.vue"),
       },
     ],
+  },
+  {
+    path: "/setting",
+    name: "Setting",
+    component: () => import("@/views/Setting.vue"),
   },
 ];
 
