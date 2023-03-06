@@ -12,24 +12,24 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "/file/upload",
-        name: "Upload",
+        name: "FileUpload",
         component: () => import("../views/File/Upload.vue"),
       },
       {
         path: "/file/list",
-        name: "List",
+        name: "FileList",
         component: () => import("../views/File/List.vue"),
       },
       {
         path: "/file/setting",
-        name: "Setting",
+        name: "FileSetting",
         component: () => import("../views/File/Setting.vue"),
       },
     ],
   },
   {
     path: "/setting",
-    name: "Setting",
+    name: "Settings",
     component: () => import("@/views/Setting.vue"),
   },
 ];
