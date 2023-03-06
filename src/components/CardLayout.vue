@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { IconType } from "@ant-design/icons-vue/lib/components/Icon";
-import { PropType } from "vue";
+import {IconType} from "@ant-design/icons-vue/lib/components/Icon";
+import {computed, PropType} from "vue";
+
 interface ListItem {
   [key: string]: any;
+
   title: string;
   icon: string | IconType;
   iconStyle?: Record<string, any>;
 }
 
-let { list, iconKey, titleKey } = defineProps({
+let {list, iconKey, titleKey, titlePosition} = defineProps({
   list: {
     type: Array as PropType<ListItem[]>,
     default: () => [],
@@ -19,13 +21,31 @@ let { list, iconKey, titleKey } = defineProps({
   },
   iconStyle: {
     type: Object as PropType<Record<string, any>>,
-    default: () => {},
+    default: () => {
+    },
+  },
+  titlePosition: {
+    type: String as PropType<"top" | "bottom">,
+    default: "bottom",
   },
   titleKey: {
     type: String,
     default: "title",
   },
 });
+
+const contentStyle = computed(() => (titlePosition === "bottom" ?
+  {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  } : {
+    display: "flex",
+    flexDirection: "column-reverse",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
 
 const emit = defineEmits(["itemClick"]);
 
@@ -42,14 +62,14 @@ const skip = (item: any) => {
       :xs="12" :sm="8" :md="8" :lg="4"
     >
       <a-card @click="skip(item)">
-        <div class="flex-col-center">
+        <div :style="contentStyle">
           <slot name="icon" :item="item">
             <a-space>
-              <component :is="item[iconKey]" :style="item.iconStyle" />
+              <component :is="item[iconKey]" :style="item.iconStyle"/>
             </a-space>
           </slot>
           <slot name="title" :item="item">
-            <div style="margin-top: 10px">{{ item[titleKey] }}</div>
+            <div>{{ item[titleKey] }}</div>
           </slot>
         </div>
       </a-card>
@@ -58,9 +78,4 @@ const skip = (item: any) => {
 </template>
 
 <style scoped>
-.flex-col-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 </style>
