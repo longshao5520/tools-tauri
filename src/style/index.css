@@ -1,0 +1,6 @@
+@import 'ant-design-vue/dist/antd.css';
+@import './dark.css';
+
+.ant-page-header-ghost {
+  background-color: transparent !important;
+}
