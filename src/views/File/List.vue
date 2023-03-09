@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { createFromIconfontCN } from "@ant-design/icons-vue";
-import { reactive } from "vue";
-import { useFileUploadHistory } from "../../api/file";
-import { useNotification } from "../../hooks/useNotification";
+import {createFromIconfontCN} from "@ant-design/icons-vue";
+import {reactive} from "vue";
+import {useFileUploadHistory} from "../../api/file";
 import CardLayout from "@/components/CardLayout.vue";
+import {message} from "ant-design-vue";
+import {writeText} from "@tauri-apps/api/clipboard";
 
-const { select } = useFileUploadHistory();
+const {select, del} = useFileUploadHistory();
 
 const store = reactive({
   list: [] as Array<any>,
 });
 
 const fetch = async () => {
-  const { data } = await select(100, 1);
+  const {data} = await select(100, 1);
   store.list = data;
 };
 
@@ -29,28 +30,46 @@ const findIcon = (type: string) => {
   return "icon-file";
 };
 
-const { sendSystemNotification } = useNotification();
 const copyFile = async (item: any) => {
-  console.log(item.url);
-
-  await sendSystemNotification(`文件地址已复制到剪切板`);
+  await writeText(item.url);
+  message.success(`${item.url}已复制到前切板`);
+};
+const removeFile = async (item: any) => {
+  await del(item.id);
+  await fetch()
+  message.success(`已删除`);
 };
 </script>
 
 <template>
-  <a-empty v-if="store.list.length == 0" description="暂无数据" />
-  <CardLayout v-else :list="store.list" title-key="name" @item-click="copyFile">
+  <a-empty v-if="store.list.length === 0"/>
+  <CardLayout v-else :list="store.list" title-key="name" title-position="top">
     <template #icon="{ item }">
+      <div>
+        <a-button type="text" style="color: #1890FF" @click="copyFile(item)">
+          <template #icon>
+            <copy-outlined/>
+          </template>
+          复制
+        </a-button>
+        <a-button type="text" style="margin-left: 10px;color: #1890FF" @click="removeFile(item)">
+          <template #icon>
+            <delete-outlined/>
+          </template>
+          删除
+        </a-button>
+      </div>
       <div style="width: 100%; height: 150px" class="flex-center">
         <a-image
           v-if="item.type.includes('image')"
           :src="item.url"
-          :preview="false"
+          :preview="true"
           width="100%"
           height="150px"
         />
-        <icon-font v-else :type="findIcon(item.type)" style="font-size: 5rem" />
+        <icon-font v-else :type="findIcon(item.type)" style="font-size: 5rem"/>
       </div>
+
     </template>
   </CardLayout>
 </template>
